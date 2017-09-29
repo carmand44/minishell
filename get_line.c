@@ -10,31 +10,50 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-t_sh	*get_line(char *buf, t_sh *sh);
+#include "lib_minishell.h"
+
+t_sh	*get_line(char *buf, t_sh *sh)
 {
 	int i;
+	int j;
+	int k;
 	int a;
-
+	
 	i = 0;
 	a = 1;
 	while (buf[i] == ' ')
 		i++;
+	if (buf[i] == '\0')
+		return (NULL);
 	while (buf[i] != '\0')
 	{
 		if (buf[i] == ' ')
 		{
-			a++
-			while (buf[i] == ' ')
+			while (buf[i + 1] == ' ')
 				i++;
+			if (buf[i + 1] != '\0')
+				a++;
+			else
+				break ;
 		}
 		i++;
-	}
-	if (a == 1)
+	} 
+	i = 0;
+	j = 0;
+	if (!(sh->arg = ft_char_2d(a, ft_strlen(buf))))
+		return (NULL);
+	while (j != a && buf[i] != '\0')
 	{
-		sh->arg == ft_char_2d(a, ft_strlen(buf));
-		bin_tmp == ft_strdup(buf);
-		return (sh);
+		k = 0;
+		while (buf[i] == ' ')
+			i++;
+		while (buf[i] != '\0' && buf[i] != ' ' && buf[i] != '\n')
+		{
+			sh->arg[j][k] = buf[i];
+			i++;
+			k++;
+		}
+		j++;
 	}
-	
-
+	return (sh);
 }

@@ -19,9 +19,7 @@
 
 typedef struct s_sh
 {
-	char **arg;
-	char *bin_tmp;
-	
+	char **arg;	
 }				t_sh;
 
 t_sh *get_line(char *buf, t_sh *sh);

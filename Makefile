@@ -12,7 +12,8 @@
 
 NAME = minishell
 
-SRC = main.c	
+SRC =	main.c \
+		get_line.c
 
 TMP = $(SRC:.c=.o)
 
