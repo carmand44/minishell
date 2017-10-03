@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib_minishell.h                                    :+:      :+:    :+:   */
+/*   built_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/04 02:30:06 by carmand           #+#    #+#             */
-/*   Updated: 2017/09/30 22:28:14 by carmand          ###   ########.fr       */
+/*   Created: 2016/11/22 20:32:15 by carmand           #+#    #+#             */
+/*   Updated: 2016/11/30 20:36:59 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_MINISHELL_H
-# define LIB_MINISHELL_H
+#include "lib_minishell.h"
 
-# include "libft/libft.h"
-# include <sys/wait.h>
-# include <dirent.h>
-# include <unistd.h>
-
-typedef struct s_sh
+void	put_env(char **sh_env)
 {
-	char **arg;
-	char **PATH;
-	char *PWD;
-	char **sh_env;
-}				t_sh;
+	int	i;
 
-t_sh	*get_line(char *buf, t_sh *sh);
-char    **get_path(char *buf);
-void    exec(t_sh *sh, char *bin);
-t_sh    *search_bin(t_sh *sh);
-void    put_env(char **sh_env);
-
-#endif
+	i = 0;
+	while (sh_env[i] != NULL)
+	{
+		ft_putendl(sh_env[i]);
+		i++;
+	}
+}

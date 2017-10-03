@@ -57,3 +57,51 @@ t_sh	*get_line(char *buf, t_sh *sh)
 	}
 	return (sh);
 }
+
+char	**get_path(char *buf)
+{
+	int i;
+	int j;
+	int k;
+	int a;
+	char **path;
+	
+	i = 0;
+	a = 1;
+	path = NULL;
+	while (buf[i] == ':')
+		i++;
+	if (buf[i] == '\0')
+		return (NULL);
+	while (buf[i] != '\0')
+	{
+		if (buf[i] == ':')
+		{
+			while (buf[i + 1] == ':')
+				i++;
+			if (buf[i + 1] != '\0')
+				a++;
+			else
+				break ;
+		}
+		i++;
+	} 
+	i = 0;
+	j = 0;
+	if (!(path = ft_char_2d(a, ft_strlen(buf))))
+		return (NULL);
+	while (j != a && buf[i] != '\0')
+	{
+		k = 0;
+		while (buf[i] == ':')
+			i++;
+		while (buf[i] != '\0' && buf[i] != ':' && buf[i] != '\n')
+		{
+			path[j][k] = buf[i];
+			i++;
+			k++;
+		}
+		j++;
+	}
+	return (path);
+}
