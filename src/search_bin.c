@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 21:23:54 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/07 01:11:36 by carmand          ###   ########.fr       */
+/*   Updated: 2017/10/07 03:56:04 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,17 @@ t_sh	*search_bin(t_sh *sh)
 	if ((search_builtin(sh) == 0))
 		return (sh);
 	i = 0;
-	while (sh->PATH[i] != NULL)
+	if (sh->PATH)
 	{
-		if (check_dir(sh->PATH[i], sh))
-			break ;
-		i++;
+		while (sh->PATH[i] != NULL)
+		{
+			if (check_dir(sh->PATH[i], sh))
+				break ;
+			i++;
+		}
+		if (sh->PATH[i] != NULL)
+			exec(sh, ft_strjoin(sh->PATH[i], ft_strjoin("/", sh->arg[0])));
 	}
-	if (sh->PATH[i] != NULL)
-		exec(sh, ft_strjoin(sh->PATH[i], ft_strjoin("/", sh->arg[0])));
 	else
 	{
 		//if (check_dir(sh->PWD, sh))

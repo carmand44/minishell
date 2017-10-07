@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 23:39:08 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/07 01:09:48 by carmand          ###   ########.fr       */
+/*   Updated: 2017/10/07 04:03:34 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_sh	*init_sh(t_sh *sh, char **env)
 
 	i = 0;
 	path = NULL;
-	if (!(sh = (t_sh*)malloc(sizeof(t_sh))))
-		return (NULL);
+	sh->PATH = NULL;
+	sh->PWD = NULL;
 	while (env[i] != NULL)
 	{
 		if (0 == ft_strncmp(env[i], "PATH=", 5))
@@ -47,14 +47,20 @@ int		main(int a, char **v, char **env)
 	t_sh *sh;
 
 	sh = NULL;
+	if (!(sh = (t_sh*)malloc(sizeof(t_sh))))
+		return (0);
 	if (!(sh = init_sh(sh, env)))
 		return (0);
 	buf = ft_strnew(128);
 	while(42)
 	{
+		if (!(sh = init_sh(sh, sh->sh_env)))
+			return (0);
 		ft_putstr("\033[36m");
-		ft_putstr(ft_strjoin(sh->PWD,"$> "));
+		if (sh->PWD)
+			ft_putstr(sh->PWD);
 		ft_putstr("\033[00m");
+		ft_putstr("$> ");
 		sh->arg = NULL;
 		if ((ret = read(0, buf, 128)))
 		{
