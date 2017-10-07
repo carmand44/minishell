@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 20:32:15 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/07 01:12:26 by carmand          ###   ########.fr       */
+/*   Updated: 2017/10/07 03:30:22 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ char	**add_env(t_sh *sh , int i)
 	}
 	else
 	{
-		free(sh->sh_env[i]);
-		if (!(sh->sh_env[i] = ft_strdup(ft_strjoin(ft_strjoin(sh->arg[1], "="), sh->arg[2]))))
+		sh->sh_env[i] = NULL;
+		if (!(sh->sh_env[i] = ft_strdup(ft_strjoin
+			(ft_strjoin(sh->arg[1], "="), sh->arg[2]))))
 			return (NULL);
 	}
 	return (sh->sh_env);
@@ -70,8 +71,8 @@ char	**set_env(t_sh *sh)
 		return (sh->sh_env);
 	while (sh->sh_env[i] != NULL)
 	{
-		if (ft_strncmp(ft_strjoin(sh->arg[1], "="), \
-			sh->sh_env[i], (ft_strlen(sh->arg[2]) + 1)) == 0)
+		if (ft_strncmp(ft_strjoin(sh->arg[1], "="),
+			sh->sh_env[i], (ft_strlen(sh->arg[1]) + 1)) == 0)
 			break ;
 		i++;
 	}
@@ -94,8 +95,8 @@ char	**unset_env(t_sh *sh)
 	k = 0;
 	while (sh->sh_env[i] != NULL)
 	{
-		if (ft_strncmp(ft_strjoin(sh->arg[1], "="), \
-			sh->sh_env[i], (ft_strlen(sh->arg[2]) + 1)) == 0)
+		if (ft_strncmp(ft_strjoin(sh->arg[1], "="),
+			sh->sh_env[i], (ft_strlen(sh->arg[1]) + 1)) == 0)
 			j = i;
 		i++;
 	}
@@ -115,8 +116,8 @@ char	**unset_env(t_sh *sh)
 		{
 			if (!(new[k] = ft_strdup(sh->sh_env[k + 1])))
 				  return (NULL);
+			k++;
 		}
-		new[i] = NULL;
 	}
 	sh->sh_env = NULL;
 	return (new);
