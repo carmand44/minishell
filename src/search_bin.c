@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 21:23:54 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/07 03:56:04 by carmand          ###   ########.fr       */
+/*   Updated: 2017/10/07 05:10:16 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ int		search_builtin(t_sh *sh)
 		if (!(sh->PWD = exec_cd(sh)))
 			return (-1);
 		return (0);
-	}
-	else if ((ft_strcmp(sh->arg[0], "clear")) == 0)
-	{
-		ft_putstr("\033[H\033[2J");
-		return (0);		
 	}
 	else if ((ft_strcmp(sh->arg[0], "setenv")) == 0)
 	{
