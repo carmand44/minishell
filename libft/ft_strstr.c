@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ttresori <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/25 03:19:32 by carmand           #+#    #+#             */
-/*   Updated: 2016/11/30 18:53:38 by carmand          ###   ########.fr       */
+/*   Created: 2016/11/25 03:19:32 by ttresori          #+#    #+#             */
+/*   Updated: 2016/11/30 17:47:14 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_strstr(const char *m, const char *n)
 {
-	size_t	i;
-	size_t	pos;
-	size_t	len;
+	unsigned int	i;
+	unsigned int	pos;
+	size_t			len;
 
 	i = 0;
 	len = ft_strlen(n);

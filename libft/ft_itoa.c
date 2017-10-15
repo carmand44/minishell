@@ -3,72 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ttresori <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/22 22:06:45 by carmand           #+#    #+#             */
-/*   Updated: 2016/11/30 20:35:40 by carmand          ###   ########.fr       */
+/*   Created: 2016/11/22 22:06:45 by ttresori          #+#    #+#             */
+/*   Updated: 2016/11/30 20:56:57 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_digitc(int n)
+static unsigned int	get_len(int n)
 {
-	int		count;
-	long	tens;
+	unsigned int	len;
 
-	count = 1;
-	tens = 10;
+	len = 1;
 	if (n < 0)
-		n = n * -1;
-	while (n >= tens)
 	{
-		tens = tens * 10;
-		count++;
+		n = -n;
+		len++;
 	}
-	return (count);
+	while (n /= 10)
+		len++;
+	return (len);
 }
 
-static char		*ft_n_neg(int *n, int *charnum, int *lastnum, char *ntxt)
+static void			to_string(char **s, unsigned int *i, unsigned int n)
 {
-	if (*n < 0)
+	if (n == 0)
+		(*s)[0] = '0';
+	(*i)--;
+	while (n > 0)
 	{
-		*n = *n * -1;
-		*charnum = *charnum + 1;
-		*lastnum = *lastnum + 1;
-		ntxt = ft_strnew(*charnum);
-		if (!ntxt)
-			return (NULL);
-		ntxt[0] = '-';
+		(*s)[*i] = '0' + (n % 10);
+		n /= 10;
+		(*i)--;
 	}
-	else
-	{
-		ntxt = ft_strnew(*charnum);
-		if (!ntxt)
-			return (NULL);
-	}
-	return (ntxt);
 }
 
-char			*ft_itoa(int n)
+char				*ft_itoa(int n)
 {
-	char	*ntxt;
-	int		charnum;
-	int		lastnum;
+	int				sign;
+	char			*s;
+	unsigned int	i;
 
-	ntxt = NULL;
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	charnum = ft_digitc(n);
-	lastnum = 0;
-	ntxt = ft_n_neg(&n, &charnum, &lastnum, ntxt);
-	if (!ntxt)
-		return (NULL);
-	charnum--;
-	while (charnum >= lastnum)
+	s = NULL;
+	i = get_len(n);
+	if ((s = ft_strnew(i)))
 	{
-		ntxt[charnum--] = (n % 10) + 48;
-		n = n / 10;
+		if (n == 0)
+		{
+			to_string(&s, &i, n);
+			return (s);
+		}
+		sign = 1;
+		if (n < 0)
+		{
+			n = -n;
+			sign = -1;
+		}
+		to_string(&s, &i, n);
+		if (sign < 0)
+			s[i] = '-';
 	}
-	return (ntxt);
+	return (s);
 }

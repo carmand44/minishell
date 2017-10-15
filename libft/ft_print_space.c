@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_env.c                                        :+:      :+:    :+:   */
+/*   ft_print_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/22 20:32:15 by carmand           #+#    #+#             */
-/*   Updated: 2016/11/30 20:36:59 by carmand          ###   ########.fr       */
+/*   Created: 2017/07/04 04:19:50 by ttresori          #+#    #+#             */
+/*   Updated: 2017/07/12 17:24:06 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_minishell.h"
+#include "libft.h"
 
-void	put_env(char **sh_env)
+void	ft_print_space(int i)
 {
-	int	i;
-
-	i = 0;
-	while (sh_env[i] != NULL)
-	{
-		ft_putendl(sh_env[i]);
-		i++;
-	}
+	while(i-- > 0)
+		ft_putchar(' ');
 }

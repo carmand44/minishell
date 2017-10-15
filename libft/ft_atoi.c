@@ -3,20 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ttresori <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/22 22:06:45 by carmand           #+#    #+#             */
-/*   Updated: 2016/11/30 22:12:45 by carmand          ###   ########.fr       */
+/*   Created: 2016/11/22 22:06:45 by ttresori          #+#    #+#             */
+/*   Updated: 2016/11/30 22:09:41 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_atoi(const char *nptr)
+static	int	ft_isblanks(int c)
 {
-	int		sign;
-	int		res;
-	int		i;
+	if (c == ' ' || c == '\t' || c == '\f' ||
+		c == '\r' || c == '\v' || c == '\n')
+		return (1);
+	return (0);
+}
+
+int			ft_atoi(const char *nptr)
+{
+	int	sign;
+	int	res;
+	int	i;
 
 	sign = 1;
 	res = 0;

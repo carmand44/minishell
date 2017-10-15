@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_bin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 21:23:54 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/04 02:18:16 by carmand          ###   ########.fr       */
+/*   Updated: 2017/10/16 00:45:47 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int		check_dir(char *path, t_sh *sh)
 int		search_builtin(t_sh *sh)
 {
 	if ((ft_strcmp(sh->arg[0], "exit")) == 0)
+	{
+		free_sh(sh);
 		exit (0);
+	}
 	else if ((ft_strcmp(sh->arg[0], "echo")) == 0)
 	{
 		ft_putendl(sh->PWD);
@@ -42,6 +45,24 @@ int		search_builtin(t_sh *sh)
 	else if ((ft_strcmp(sh->arg[0], "env")) == 0)
 	{
 		put_env(sh->sh_env);
+		return (0);
+	}
+	else if ((ft_strcmp(sh->arg[0], "cd")) == 0)
+	{
+		if (!(sh = cd(sh)))
+			return (-1);
+		return (0);
+	}
+	else if ((ft_strcmp(sh->arg[0], "setenv")) == 0)
+	{
+		if (!(sh->sh_env = set_env(sh)))
+			return (-1);
+		return (0);
+	}
+	else if ((ft_strcmp(sh->arg[0], "unsetenv")) == 0)
+	{
+		if (!(sh->sh_env = unset_env(sh)))
+			return (-1);
 		return (0);
 	}
 	return (1);
@@ -54,14 +75,17 @@ t_sh	*search_bin(t_sh *sh)
 	if ((search_builtin(sh) == 0))
 		return (sh);
 	i = 0;
-	while (sh->PATH[i] != NULL)
+	if (sh->PATH)
 	{
-		if (check_dir(sh->PATH[i], sh))
-			break ;
-		i++;
+		while (sh->PATH[i] != NULL)
+		{
+			if (check_dir(sh->PATH[i], sh))
+				break ;
+			i++;
+		}
+		if (sh->PATH[i] != NULL)
+			exec(sh, ft_strjoin(sh->PATH[i], ft_strjoin("/", sh->arg[0])));
 	}
-	if (sh->PATH[i] != NULL)
-		exec(sh, ft_strjoin(sh->PATH[i], ft_strjoin("/", sh->arg[0])));
 	else
 	{
 		//if (check_dir(sh->PWD, sh))

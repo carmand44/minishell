@@ -3,44 +3,50 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: carmand <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: carmand <ttresori@student.42.fr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/22 21:43:02 by carmand           #+#    #+#              #
-#    Updated: 2017/09/28 00:05:23 by carmand          ###   ########.fr        #
+#    Updated: 2017/10/16 00:39:38 by carmand          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC =	main.c \
-		get_line.c \
-		search_bin.c \
-		built_env.c \
-		exec.c
+SRCDIR = src
+SRC = free_sh.c help_sh.c built_env.c exec.c get_line.c main.c search_bin.c built_cd.c
 
-TMP = $(SRC:.c=.o)
+OBJDIR = obj
+OBJ = $(SRC:.c=.o)
 
-LIB = libft/libft.a
+LIBDIR = libft
+LIB = ft
 
-CC = gcc -Wall -Wextra -Werror
+CFLAGS = -Wall -Werror -Wextra
 
-.PHONY : all clean fclean re
+all: $(LIBDIR)/lib$(LIB).a $(OBJDIR) $(NAME)
 
-all : $(NAME)
+$(LIBDIR)/lib$(LIB).a:
+	@make -C $(LIBDIR)
 
-$(NAME): $(LIB) $(SRC)
-	$(CC) $(FLAGS) -c $(SRC) -I . -I ./libft
-	$(CC) $(FLAGS) $(TMP) -o $(NAME)  -L ./libft -lft -I . -I ./libft/
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
 
-$(LIB):
-	make -C libft
+$(NAME): $(addprefix $(OBJDIR)/, $(OBJ))
+	@$(CC) $(CFLAGS) $(addprefix $(OBJDIR)/, $(OBJ)) -o $(NAME) -L $(LIBDIR) -l $(LIB)
+	@tput setaf 77 ; echo [DONE]
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo compiled $<
 
 clean:
-	rm -f $(TMP)
-	make -C libft clean
+	@rm -rf $(OBJDIR)
+	@make clean -C $(LIBDIR)
 
 fclean: clean
-	rm -f $(NAME)
-	make -C libft fclean
+	@rm -rf $(NAME)
+	@make fclean -C $(LIBDIR)
 
-re : fclean all
+re: fclean all
+
+.PHONY: re fclean clean all

@@ -3,31 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ttresori <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/17 19:15:37 by carmand           #+#    #+#             */
-/*   Updated: 2016/11/30 18:51:47 by carmand          ###   ########.fr       */
+/*   Created: 2016/11/30 18:46:36 by ttresori          #+#    #+#             */
+/*   Updated: 2016/11/30 20:51:28 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 int	ft_strcmp(char *s1, char *s2)
 {
-	size_t			i;
-	unsigned char	*sa;
-	unsigned char	*sb;
+	int				i;
+	unsigned char	*s12;
+	unsigned char	*s22;
 
-	sa = (unsigned char*)s1;
-	sb = (unsigned char*)s2;
 	i = 0;
-	while (sa[i] != '\0' && sb[i] != '\0')
+	s12 = (unsigned char *)s1;
+	s22 = (unsigned char *)s2;
+	while (s12[i] != '\0' && s22[i] != '\0')
 	{
-		if (sa[i] != sb[i])
-			return (sa[i] - sb[i]);
+		if (s12[i] != s22[i])
+			return (s12[i] - s22[i]);
 		i++;
 	}
-	if (sa[i] == sb[i])
+	if (s12[i] == s22[i])
 		return (0);
-	return (sa[i] - sb[i]);
+	return (s12[i] - s22[i]);
 }

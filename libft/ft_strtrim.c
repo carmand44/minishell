@@ -3,36 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ttresori <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/22 22:06:45 by carmand           #+#    #+#             */
-/*   Updated: 2016/12/01 03:07:22 by carmand          ###   ########.fr       */
+/*   Created: 2016/11/22 22:06:45 by ttresori          #+#    #+#             */
+/*   Updated: 2016/11/30 20:42:47 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_istrim(char c)
+static int	ft_isblanc(int c)
 {
-	if (c == ' ' || c == '\n' || c == '\t')
-		return (1);
-	return (0);
+	return (c == ' ' || c == '\t' || c == '\n');
 }
 
-char			*ft_strtrim(char const *s)
+char		*ft_strtrim(char const *s)
 {
-	unsigned int	size;
-	unsigned int	start;
-	unsigned int	end;
+	unsigned int	i;
+	size_t			len;
+	char			*ret;
 
 	if (!s)
-		return (NULL);
-	size = ft_strlen((char*)s);
-	start = 0;
-	while (ft_istrim(s[start]))
-		start++;
-	end = size;
-	while (end > start && ft_istrim(s[end - 1]))
-		end--;
-	return (ft_strsub((char*)s, start, end - start));
+		return (0);
+	i = 0;
+	while (ft_isblanc(s[i]))
+		i++;
+	len = ft_strlen(s) - 1;
+	while (len > i && ft_isblanc(s[len]))
+		len--;
+	if (len < i)
+		return (ret = ft_strdup(""));
+	return (ret = ft_strsub(s, i, len - (size_t)i + 1));
 }

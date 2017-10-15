@@ -3,67 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ttresori <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/22 22:06:45 by carmand           #+#    #+#             */
-/*   Updated: 2016/12/01 03:06:10 by carmand          ###   ########.fr       */
+/*   Created: 2016/11/22 22:06:45 by ttresori          #+#    #+#             */
+/*   Updated: 2016/11/30 20:48:15 by ttresori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char		**wary_init(char const *s, char c)
+static	int		ft_count_words(const char *str, char c)
 {
-	long long		i;
-	long long		beg;
-	char			**wary;
-	unsigned int	wcount;
+	int	word;
+	int	i;
 
-	wcount = 0;
-	beg = -1;
 	i = 0;
-	while (s[i] != '\0')
+	word = 0;
+	if (!str)
+		return (0);
+	while (str[i])
 	{
-		if (s[i] == c)
-		{
-			if (beg != i - 1)
-				wcount++;
-			beg = i;
-		}
+		if (str[i] == c && str[i + 1] != c)
+			word++;
 		i++;
 	}
-	if (beg != i - 1)
-		wcount++;
-	wary = (char **)malloc((wcount + 1) * sizeof(char*));
-	if (!wary)
-		return (NULL);
-	wary[wcount] = NULL;
-	return (wary);
+	if (str[0] != '\0')
+		word++;
+	return (word);
 }
 
-char			**ft_strsplit(char const *s, char c)
+static	char	*ft_word(const char *str, char c, int *i)
 {
-	long long		i;
-	long long		beg;
-	char			**wary;
-	unsigned int	wcount;
+	char	*s;
+	int		k;
 
-	if (!s || !(wary = wary_init((char*)s, c)))
+	if (!(s = (char *)malloc(sizeof(s) * (ft_strlen(str)))))
 		return (NULL);
-	wcount = 0;
-	beg = -1;
-	i = 0;
-	while (s[i] != '\0')
+	k = 0;
+	while (str[*i] != c && str[*i])
 	{
-		if (s[i] == c)
-		{
-			if (beg != i - 1)
-				wary[wcount++] = ft_strsub((char*)s, beg + 1, (i - beg) - 1);
-			beg = i;
-		}
-		i++;
+		s[k] = str[*i];
+		k++;
+		*i += 1;
 	}
-	if (beg != i - 1)
-		wary[wcount++] = ft_strsub((char*)s, beg + 1, (i - beg) - 1);
-	return (wary);
+	s[k] = '\0';
+	while (str[*i] == c && str[*i])
+		*i += 1;
+	return (s);
+}
+
+char			**ft_strsplit(const char *str, char c)
+{
+	int		i;
+	int		j;
+	int		wrd;
+	char	**s;
+
+	i = 0;
+	j = 0;
+	if (!str)
+		return (0);
+	wrd = ft_count_words(str, c);
+	if (!(s = (char **)malloc(sizeof(s) * (wrd + 2))))
+		return (NULL);
+	while (str[i] == c && str[i])
+		i++;
+	while (j < wrd && str[i])
+	{
+		s[j] = ft_word(str, c, &i);
+		j++;
+	}
+	s[j] = NULL;
+	return (s);
 }
