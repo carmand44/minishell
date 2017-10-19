@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/27 23:39:08 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/19 02:20:18 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/20 00:45:18 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ int		main(int a, char **v, char **env)
 			sh->buf[ret] = '\0';
 			if (!(sh = get_line(sh->buf, sh)))
 				return (0);
-			put_env(sh->arg, sh->s_arg);
 			sh = search_bin(sh);
 		}
 	}

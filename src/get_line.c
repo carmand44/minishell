@@ -6,7 +6,7 @@
 /*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 03:19:09 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/19 02:17:55 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/20 00:44:48 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,26 @@ t_sh	*get_line(char *buf, t_sh *sh)
 
 	i = 0;
 	a = 0;
-	while ((buf[i] == ' ') || (buf[i] == '\t'))
+	while ((buf[i] == ' ') || (buf[i] == '\t') || (buf[i] == '\n'))
 		i++;
 	if (buf[i] == '\0')
 		return (NULL);
 	while (buf[i] != '\0')
 	{
-		if ((buf[i] == ' ') || (buf[i] == '\t'))
+		while ((buf[i] == ' ') || (buf[i] == '\t') || (buf[i] == '\n'))
+			i++;
+		while ((buf[i] != ' ') && (buf[i] != '\t') && (buf[i] != '\0') && (buf[i] != '\n'))
 		{
-			while ((buf[i + 1] == ' ') || (buf[i + 1] == '\t'))
-				i++;
-			if (buf[i + 1] != '\0')
+			if ((buf[i + 1] == ' ') || (buf[i + 1] == '\t')
+			|| (buf[i + 1] == '\0') || (buf[i + 1] == '\n'))
+			{
 				a++;
-			else
 				break ;
+			}
+			i++;
 		}
 		i++;
 	}
-	a++;
 	i = 0;
 	j = 0;
 	if (!(sh->arg = ft_char_2d(a, ft_strlen(buf))))
