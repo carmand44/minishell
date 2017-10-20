@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/22 20:32:15 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/19 02:20:03 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/20 04:57:00 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,58 +110,69 @@ char	**add_env(t_sh *sh , int i)
 {
 	int		j;
 	int		s;
+	char	*tmp;
 	char	**new;
 
 	j = 0;
 	s = 0;
+	tmp = NULL;
+	new = NULL;
 	if (i == -1)
 	{
-		new = NULL;
-		while (sh->sh_env[j] != NULL)
-			j++;
-		if (!(new = (char**)malloc(sizeof(char*) * (j + 2))))
+		if (!(new = (char**)malloc(sizeof(char*) * (sh->s_env + 1))))
 		   return (NULL);
-		while (s < j)
+		while (s < sh->s_env)
 		{
 			if (!(new[s] = ft_strdup(sh->sh_env[s])))
 				return (NULL);
 			s++;
 		}
-		if (!(new[s] = ft_strdup(ft_strjoin \
-			(ft_strjoin(sh->arg[1], "="), sh->arg[2]))))
-			return (NULL);
-		new[s + 1] = NULL;
-		sh->sh_env = NULL;
+		if (sh->s_arg == 3)
+		{
+			if (!(tmp = ft_strjoin(sh->arg[1], "=")))
+				return (NULL);
+			if (!(new[s] = ft_strjoin(tmp, sh->arg[2])))
+					return (NULL);
+				ft_strdel(&tmp);
+		}
+		else
+			if (!(new[s] = ft_strjoin(sh->arg[1], "=")))
+				return (NULL);
+		free_tab(sh->sh_env, sh->s_env);
+		sh->s_env += 1;
 		return (new);
 	}
 	else
 	{
-		sh->sh_env[i] = NULL;
-		if (!(sh->sh_env[i] = ft_strdup(ft_strjoin
-			(ft_strjoin(sh->arg[1], "="), sh->arg[2]))))
-			return (NULL);
+		ft_strdel(&sh->sh_env[i]);
+		if (sh->s_arg == 3)
+		{
+			if (!(tmp = ft_strjoin(sh->arg[1], "=")))
+				return (NULL);
+			if (!(sh->sh_env[i] = ft_strjoin(tmp, sh->arg[2])))
+				return (NULL);
+			ft_strdel(&tmp);
+		}
+		else
+			if (!(new[s] = ft_strjoin(sh->arg[1], "=")))
+				return (NULL);
 	}
 	return (sh->sh_env);
 }
 
 char	**set_env(t_sh *sh)
 {
-	int i;
+	int		i;
+	char	*tmp;
 
-	i = 0;
-	if (sh->arg[1] == NULL)
+	i = -2;
+	tmp = NULL;
+	if (!((sh->s_arg == 2) || (sh->s_arg == 3)))
 		return (sh->sh_env);
-	while (sh->sh_env[i] != NULL)
-	{
-		if (ft_strncmp(ft_strjoin(sh->arg[1], "="),
-			sh->sh_env[i], (ft_strlen(sh->arg[1]) + 1)) == 0)
-			break ;
-		i++;
-	}
-	if (sh->sh_env[i] == NULL)
-		return (add_env(sh, -1));
-	else
-		return (add_env(sh, i));
+	tmp = ft_strjoin(sh->arg[1], "=");
+	i = search_env(sh, tmp);
+	ft_strdel(&tmp);
+	return (add_env(sh, i));
 }
 
 
@@ -177,7 +188,7 @@ char	**unset_env(t_sh *sh)
 	j = -1;
 	new = NULL;
 	k = 0;
-	if (sh->s_arg == 1)
+	if (!((sh->s_arg == 2) || (sh->s_arg == 3)))
 		return (sh->sh_env);
 	j = search_env(sh, sh->arg[1]);
 	if (j == -1)
@@ -186,7 +197,7 @@ char	**unset_env(t_sh *sh)
 	{
 		if (!(new = (char**)malloc(sizeof(char*) * (sh->s_env - 1))))
 			return (NULL);
-		while (k != j)
+		while (k < j)
 		{
 			if (!(new[k] = ft_strdup(sh->sh_env[k])))
 				return (NULL);
@@ -200,6 +211,6 @@ char	**unset_env(t_sh *sh)
 		}
 	}
 	sh->s_env--;
-	free_tab(sh->sh_env, sh->s_env);
+	free_tab(sh->sh_env, sh->s_env + 1);
 	return (new);
 }

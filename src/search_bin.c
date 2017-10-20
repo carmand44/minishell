@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 21:23:54 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/19 02:15:23 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/20 05:08:05 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,20 @@ int		check_dir(char *path, t_sh *sh)
 	struct dirent   *ent;
 
 	if (!(rep = opendir(path)))
+	{
+		closedir(rep);
 		return (0);
+	}
 	while ((ent = readdir(rep)))
 	{
 		if ((ft_strcmp(sh->arg[0], ent->d_name)) == 0)
 		{
 			closedir(rep);
+			//free(ent);
 			return (1);
 		}
 	}
+	closedir(rep);
 	free(ent);
 	return (0);
 }
@@ -52,7 +57,6 @@ int		search_builtin(t_sh *sh)
 	{
 		if (!(sh->PWD = exec_cd(sh)))
 			return (-1);
-		ft_putendl("CD OUT");
 		return (0);
 	}
 	else if ((ft_strcmp(sh->arg[0], "clear")) == 0)

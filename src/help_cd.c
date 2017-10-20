@@ -6,7 +6,7 @@
 /*   By: ttresori <ttresori@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/30 21:23:54 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/19 02:24:26 by ttresori         ###   ########.fr       */
+/*   Updated: 2017/10/20 05:06:41 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int no_arg(char *arg, t_sh *sh)
 
 char *add_pwd(t_sh *sh)
 {
-	char*tmp;
+	char	*tmp;
+	char	*tmp2;
 
 	tmp = NULL;
 	if (sh->s_arg == 1 || sh->arg[1][0] == '#' || sh->arg[1][0] == '~' || sh->arg[1][0] == ';')
@@ -79,9 +80,12 @@ char *add_pwd(t_sh *sh)
 	}
 	else
 	{
-//		ft_strdel
-		if (!(sh->PWD = ft_strdup(((ft_strjoin(ft_strjoin(sh->PWD, "/"), sh->arg[1]))))))
-			return (NULL);
+	  if (!(tmp2 = ft_strjoin(sh->PWD, "/")))
+	    return (NULL);
+		ft_strdel(&sh->PWD);
+  	 if (!(sh->PWD = ft_strjoin(tmp2, sh->arg[1])))
+		return (NULL);
+	ft_strdel(&tmp2);;
 	}
 	return(sh->PWD);
 }
