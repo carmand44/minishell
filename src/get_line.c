@@ -6,7 +6,7 @@
 /*   By: carmand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 03:19:09 by carmand           #+#    #+#             */
-/*   Updated: 2017/10/20 04:51:59 by carmand          ###   ########.fr       */
+/*   Updated: 2017/10/23 01:43:20 by carmand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_sh	*get_line(char *buf, t_sh *sh)
 		}
 		j++;
 	}
-	put_env(sh->arg, sh->s_arg);
+//	put_env(sh->arg, sh->s_arg);
 	return (sh);
 }
 
