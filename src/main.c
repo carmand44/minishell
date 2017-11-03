@@ -118,9 +118,8 @@ int		main(int a, char **v, char **env)
 		if ((ret = read(0, sh->buf, 128)))
 		{
 			sh->buf[ret] = '\0';
-			if (!(sh = get_line(sh->buf, sh)))
-				return (0);
-			sh = search_bin(sh);
+			if ((sh->arg = get_line(sh->buf, sh)))
+				sh = search_bin(sh);
 		}
 	}
 	a++;

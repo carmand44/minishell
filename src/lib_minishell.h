@@ -15,7 +15,8 @@
 
 # include "../libft/libft.h"
 # include <sys/wait.h>
-# include "sys/stat.h"
+# include <sys/stat.h>
+# include <sys/types.h>
 # include <dirent.h>
 # include <unistd.h>
 
@@ -34,7 +35,7 @@ typedef struct s_sh
 	char	*buf;
 }				t_sh;
 
-t_sh	*get_line(char *buf, t_sh *sh);
+char	**get_line(char *buf, t_sh *sh);
 char    **get_path(char *buf, t_sh *sh);
 char    **set_env(t_sh *sh);
 char	**unset_env(t_sh *sh);

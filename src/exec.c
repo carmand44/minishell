@@ -14,7 +14,7 @@
 
 void	exec(t_sh *sh, char *bin)
 {
-	pid_t father;
+	pid_t		father;
 
 	father = fork();
 	if (father > 0)
@@ -22,9 +22,10 @@ void	exec(t_sh *sh, char *bin)
 	if (father == 0)
 	{
 		execve(bin, sh->arg, NULL);
-		ft_putstr_fd("minishell: command not found: ", 2);
-		ft_putendl_fd(bin, 2);
-		free_sh(sh);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(bin, 2);
+		ft_putendl_fd(": Permission denied", 2);
+		free_sh(sh);	
 		exit (0);
 	}
 }

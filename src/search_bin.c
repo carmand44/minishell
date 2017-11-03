@@ -27,7 +27,6 @@ int		check_dir(char *path, t_sh *sh)
 		if ((ft_strcmp(sh->arg[0], ent->d_name)) == 0)
 		{
 			closedir(rep);
-			//free(ent);
 			return (1);
 		}
 	}
@@ -84,7 +83,9 @@ t_sh	*search_bin(t_sh *sh)
 	int				i;
 	char			*tmp;
 	char			*tmp2;
+	//struct stat		*sts;
 
+	//sts = NULL;
 	if ((search_builtin(sh) == 0))
 		return (sh);
 	i = 0;
@@ -103,13 +104,19 @@ t_sh	*search_bin(t_sh *sh)
 			ft_strdel(&tmp);
 			exec(sh, tmp2);
 			ft_strdel(&tmp2);
+			return (sh);
 		}
-	}
-	else
-	{
-		//if (check_dir(sh->PWD, sh))
+		if (access(sh->arg[0], F_OK) == 0)
+		{
 			exec(sh, sh->arg[0]);
 			return (sh);
+		}
+		else 
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(sh->arg[0], 2);
+			ft_putendl_fd(" command not found", 2);
+		}
 	}
 	return (sh);
 }

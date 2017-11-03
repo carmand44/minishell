@@ -12,7 +12,7 @@
 
 #include "lib_minishell.h"
 
-t_sh	*get_line(char *buf, t_sh *sh)
+char	**get_line(char *buf, t_sh *sh)
 {
 	int i;
 	int j;
@@ -61,7 +61,7 @@ t_sh	*get_line(char *buf, t_sh *sh)
 		j++;
 	}
 //	put_env(sh->arg, sh->s_arg);
-	return (sh);
+	return (sh->arg);
 }
 
 char	**get_path(char *buf, t_sh *sh)

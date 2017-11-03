@@ -108,12 +108,10 @@ char	 **modify_env(t_sh *sh, char *line, char *modify)
 
 char	**add_env(t_sh *sh , int i)
 {
-	int		j;
 	int		s;
 	char	*tmp;
 	char	**new;
 
-	j = 0;
 	s = 0;
 	tmp = NULL;
 	new = NULL;
@@ -179,12 +177,10 @@ char	**set_env(t_sh *sh)
 
 char	**unset_env(t_sh *sh)
 {
-	int		i;
 	int 	j;
 	int		k;
 	char	**new;
 
-	i = 0;
 	j = -1;
 	new = NULL;
 	k = 0;

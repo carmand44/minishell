@@ -38,13 +38,9 @@ char	*cut_one(char *entry, char *tmp, t_sh *sh)
 
 t_sh	*go_old_pwd(t_sh *sh)
 {
-	int 	i;
-	int 	i2;
 	char 	*tmp;
 	int		find;
 
-	i = 0;
-	i2 = 0;
 	find = search_env(sh, "OLDPWD=");
 	if (find == -1)
 	{
@@ -107,9 +103,7 @@ char	*exec_cd(t_sh *sh)
 {
   char *init;
   char *entry;
-  int i;
 
-  i = 0;
   init = NULL;
   if (!(check_error(sh)))
 	  return(sh->PWD);
